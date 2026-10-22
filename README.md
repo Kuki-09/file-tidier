@@ -44,13 +44,13 @@ Tested on a Mac with Python 3.10. The watcher handles only files that arrive aft
 ## Use
 
 ```
-python cli.py run ~/Downloads/Messy              # preview, then confirm
-python cli.py run ~/Downloads/Messy --yes        # skip the confirmation
+python cli.py run ~/Downloads/Messy                          # preview, then confirm
+python cli.py run ~/Downloads/Messy --yes                    # skip the confirmation
 python cli.py run ~/Downloads/Messy --rename-only            # rename in place, no folders
 python cli.py run ~/Downloads/Messy --archive-months 6       # old files go to Archive/
-python cli.py undo ~/Downloads/Messy             # reverse the last run
+python cli.py undo ~/Downloads/Messy                         # reverse the last run
 
-python watcher.py ~/Downloads/Messy              # lazy mode, Ctrl+C to stop
+python watcher.py ~/Downloads/Messy                          # lazy mode, Ctrl+C to stop
 ```
 
 The watcher only handles files that arrive after it starts. Tidy what is already there with one `cli.py run`.
