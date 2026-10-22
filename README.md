@@ -41,16 +41,6 @@ Tested on a Mac with Python 3.10. The watcher handles only files that arrive aft
 | Lazy mode      | Waits until a file stops growing, then tidies only the new files                                                        | `watcher.py`                    |
 | Archive        | Optional: files not modified for N months go to `Archive/<folder>`                                                      | `planner.py`                    |
 
-## How it works
-
-```
-scan -> read a short snippet -> Gemma names and sorts it -> code checks the name
-     -> preview -> confirm -> move -> undo log
-```
-
-- Only the first 1,500 characters of a document go to the model. Images are shrunk to 896 px first.
-- Gemma was good at naming a file from its content and bad at judging whether the old name was fine: it named `some.pdf` correctly, then said to keep `some.pdf`. So a file keeps its old name only when the model and a plain word-overlap check in code both agree.
-
 ## Safety
 
 - Nothing leaves your machine. Everything runs through local Ollama.
