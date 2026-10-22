@@ -18,11 +18,11 @@ git clone https://github.com/Kuki-09/file-tidier.git && cd file-tidier
 python -m venv venv && source venv/bin/activate
 python -m pip install -r requirements.txt
 
-python cli.py run ~/Downloads/Messy              # preview, then confirm
+python cli.py run ~/Downloads/Messy                          # preview, then confirm
 python cli.py run ~/Downloads/Messy --rename-only            # rename in place, no folders
 python cli.py run ~/Downloads/Messy --archive-months 6       # old files go to Archive/
-python cli.py undo ~/Downloads/Messy             # reverse the last run
-python watcher.py ~/Downloads/Messy              # lazy mode, Ctrl+C to stop
+python cli.py undo ~/Downloads/Messy                         # reverse the last run
+python watcher.py ~/Downloads/Messy                          # lazy mode, Ctrl+C to stop
 ```
 
 Tested on a Mac with Python 3.10. The watcher handles only files that arrive after it starts. Tidy what is already there with one `cli.py run`.
@@ -40,20 +40,6 @@ Tested on a Mac with Python 3.10. The watcher handles only files that arrive aft
 | Undo           | Reverses the latest log and removes only the folders it created                                                         | `executor.py`                   |
 | Lazy mode      | Waits until a file stops growing, then tidies only the new files                                                        | `watcher.py`                    |
 | Archive        | Optional: files not modified for N months go to `Archive/<folder>`                                                      | `planner.py`                    |
-
-## Use
-
-```
-python cli.py run ~/Downloads/Messy                          # preview, then confirm
-python cli.py run ~/Downloads/Messy --yes                    # skip the confirmation
-python cli.py run ~/Downloads/Messy --rename-only            # rename in place, no folders
-python cli.py run ~/Downloads/Messy --archive-months 6       # old files go to Archive/
-python cli.py undo ~/Downloads/Messy                         # reverse the last run
-
-python watcher.py ~/Downloads/Messy                          # lazy mode, Ctrl+C to stop
-```
-
-The watcher only handles files that arrive after it starts. Tidy what is already there with one `cli.py run`.
 
 ## How it works
 
