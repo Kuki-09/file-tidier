@@ -1,6 +1,6 @@
 # File-Tidier
 
-**A local file tidier. Gemma reads each file, names it from what is inside, and sorts it into a folder. Offline, with full undo.**
+**A local file tidier. Gemma reads each file, names it from what is inside and sorts it into a folder. Offline, with full undo.**
 
 Demo: [watch the video](ADD_VIDEO_LINK) · Evaluation: [eval/EVAL.md](eval/EVAL.md)
 
