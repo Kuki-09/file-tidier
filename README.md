@@ -4,7 +4,7 @@ A local file tidier. Point it at a messy folder: it reads each file, gives it a 
 
 Built for the Hacktoberfest Open-Source AI Challenge, Week 3 ("Slow and Steady").
 
-![Folder before and after](outputs/before_after_image.png)
+![Folder before and after](docs/before_after_image.png)
 
 ## What it does
 
