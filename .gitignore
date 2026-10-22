@@ -1,0 +1,8 @@
+venv/
+__pycache__/
+.tidy_logs/
+plan.json
+report.md
+undo_log.json
+.DS_Store
+.env
