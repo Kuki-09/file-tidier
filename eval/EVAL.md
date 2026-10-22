@@ -13,7 +13,7 @@ Every decision, file by file, is in [REVIEW.md](REVIEW.md).
 - **Folder:** one correct folder per file. Where a file really fits two (an airline invoice can be Receipts or Travel), both are accepted.
 - **Rename:** "rename expected" unless the old name already says specifically what the file is (`flight_invoice_delhi_bengaluru.png` is fine, `speech.txt` is not). Two files are marked "either" and not scored.
 
-## Results (one run with the final code)
+## Results
 
 |                               | Result                                                  |
 | ----------------------------- | ------------------------------------------------------- |
