@@ -1,0 +1,91 @@
+run,file,type,size_kb,seconds,category,new_name,keep_name,confidence
+1,B4H-44aAzqc-unsplash.jpg,image,503.7,4.0,Photos,pigeon-reflection,False,0.95
+1,PpR6xgFMgZk-unsplash.jpg,image,2236.2,13.1,Photos,seagull-in-flight,False,0.95
+1,RCH8OeyH604-unsplash.jpg,image,3492.7,13.2,Photos,great_barrier_reef,False,0.95
+1,ai.pdf,document,1260.0,7.3,Study,artificial-intelligence-introduction,False,0.9
+1,air_water_pollution_questions.docx,document,12.2,7.7,Study,air_water_pollution_questions,False,0.95
+1,assignment_2.docx,document,231.9,8.1,Study,operating-systems-assignment,False,0.85
+1,attention.pdf,document,2163.3,7.4,Study,transformer-attention-model,False,0.95
+1,corgi_dog_in_grass.jpg,image,3086.9,15.4,Photos,corgi_in_grass,True,0.95
+1,courtyard.jpg,image,8006.4,14.9,Photos,courtyard_of_palazzo,False,0.95
+1,dsa.pdf,document,4569.1,7.1,Study,data_structures_introduction,False,0.9
+1,ede93-history.pdf,document,10517.4,7.8,Study,visionias_history_notes,False,0.95
+1,ev_charging_invoice.png,image,202.2,13.3,Receipts,charging_invoice_poluppalli,False,0.95
+1,flight_invoice_delhi_bengaluru.png,image,273.3,13.7,Travel,flight_invoice_delhi_bengaluru,True,0.95
+1,green_revolution_india.pdf,document,102.1,7.5,Study,green_revolution_india,True,0.95
+1,health.txt,document,4.4,7.3,Study,healthy-lifestyle-guide,False,0.95
+1,image 2.jpg,image,5033.5,13.1,Photos,child-walking-road,False,0.95
+1,image 8.png,image,572.6,13.6,Receipts,siddhi_nuts_and_spices_bill,False,0.95
+1,image.jpg,image,5144.7,13.3,Photos,beach_day_scene,False,0.95
+1,image_01.png,image,182.6,12.9,Work,pay_slip_murhuda_sy,False,0.9
+1,image_11.png,image,380.4,13.0,Receipts,jeevan_hospital_bill,False,0.95
+1,ml ut2 ans.pages,no-text,521.0,4.6,Study,ml_ut2_ans,False,0.8
+1,nlp endsem.docx,document,352.1,6.7,Study,markov-model-nlp,False,0.9
+1,object_detection_research_paper.pdf,document,280.4,7.4,Study,object-detection-research-paper,True,0.95
+1,porsche_on_forest_road.jpg,image,6266.1,14.7,Photos,porsche-forest-road,True,0.95
+1,rent.png,image,417.4,13.8,Receipts,rent_receipt_vimlesh,False,0.95
+1,rent_receipt_may_2026.txt,document,0.1,5.7,Receipts,rent_receipt_may_2026,True,0.95
+1,research.pdf,document,632.4,8.5,Study,procedia-computer-science-2021,False,0.95
+1,speech.txt,document,3.6,6.3,Study,world_democracy_speech,False,0.9
+1,untitled 6.png,image,460.3,13.9,Receipts,airtel_bill_feb_2026,False,0.9
+1,untitled.docx,document,270.2,8.3,Study,alice-wonderland-notes,False,0.95
+2,B4H-44aAzqc-unsplash.jpg,image,503.7,4.2,Photos,pigeon-reflection,False,0.95
+2,PpR6xgFMgZk-unsplash.jpg,image,2236.2,4.7,Photos,seagull-in-flight,False,0.95
+2,RCH8OeyH604-unsplash.jpg,image,3492.7,4.6,Photos,great_barrier_reef,False,0.95
+2,ai.pdf,document,1260.0,7.7,Study,artificial-intelligence-introduction,False,0.9
+2,air_water_pollution_questions.docx,document,12.2,7.8,Study,air_water_pollution_questions,False,0.95
+2,assignment_2.docx,document,231.9,8.2,Study,operating-systems-assignment,False,0.85
+2,attention.pdf,document,2163.3,7.1,Study,transformer-attention-model,False,0.95
+2,corgi_dog_in_grass.jpg,image,3086.9,5.0,Photos,corgi_in_grass,True,0.95
+2,courtyard.jpg,image,8006.4,6.0,Photos,courtyard_of_palazzo,False,0.95
+2,dsa.pdf,document,4569.1,7.7,Study,data_structures_introduction,False,0.9
+2,ede93-history.pdf,document,10517.4,7.7,Study,visionias_history_notes,False,0.95
+2,ev_charging_invoice.png,image,202.2,4.8,Receipts,charging_invoice_poluppalli,False,0.95
+2,flight_invoice_delhi_bengaluru.png,image,273.3,5.2,Travel,flight_invoice_delhi_bengaluru,True,0.95
+2,green_revolution_india.pdf,document,102.1,8.1,Study,green_revolution_india,True,0.95
+2,health.txt,document,4.4,7.5,Study,healthy-lifestyle-guide,False,0.95
+2,image 2.jpg,image,5033.5,5.1,Photos,child-walking-road,False,0.95
+2,image 8.png,image,572.6,5.2,Receipts,siddhi_nuts_and_spices_bill,False,0.95
+2,image.jpg,image,5144.7,4.8,Photos,beach_day_scene,False,0.95
+2,image_01.png,image,182.6,4.9,Work,pay_slip_murhuda_sy,False,0.9
+2,image_11.png,image,380.4,4.7,Receipts,jeevan_hospital_bill,False,0.95
+2,ml ut2 ans.pages,no-text,521.0,5.4,Study,ml_ut2_ans,False,0.8
+2,nlp endsem.docx,document,352.1,7.1,Study,markov-model-nlp,False,0.9
+2,object_detection_research_paper.pdf,document,280.4,4.7,Study,object-detection-research-paper,True,0.95
+2,porsche_on_forest_road.jpg,image,6266.1,5.0,Photos,porsche-forest-road,True,0.95
+2,rent.png,image,417.4,4.6,Receipts,rent_receipt_vimlesh,False,0.95
+2,rent_receipt_may_2026.txt,document,0.1,5.4,Receipts,rent_receipt_may_2026,True,0.95
+2,research.pdf,document,632.4,8.4,Study,procedia-computer-science-2021,False,0.95
+2,speech.txt,document,3.6,4.5,Study,world_democracy_speech,False,0.9
+2,untitled 6.png,image,460.3,5.0,Receipts,airtel_bill_feb_2026,False,0.9
+2,untitled.docx,document,270.2,4.9,Study,alice-wonderland-notes,False,0.95
+3,B4H-44aAzqc-unsplash.jpg,image,503.7,4.3,Photos,pigeon-reflection,False,0.95
+3,PpR6xgFMgZk-unsplash.jpg,image,2236.2,4.9,Photos,seagull-in-flight,False,0.95
+3,RCH8OeyH604-unsplash.jpg,image,3492.7,4.6,Photos,great_barrier_reef,False,0.95
+3,ai.pdf,document,1260.0,4.4,Study,artificial-intelligence-introduction,False,0.9
+3,air_water_pollution_questions.docx,document,12.2,4.7,Study,air_water_pollution_questions,False,0.95
+3,assignment_2.docx,document,231.9,5.2,Study,operating-systems-assignment,False,0.85
+3,attention.pdf,document,2163.3,5.3,Study,transformer-attention-model,False,0.95
+3,corgi_dog_in_grass.jpg,image,3086.9,5.7,Photos,corgi_in_grass,True,0.95
+3,courtyard.jpg,image,8006.4,5.8,Photos,courtyard_of_palazzo,False,0.95
+3,dsa.pdf,document,4569.1,4.3,Study,data_structures_introduction,False,0.9
+3,ede93-history.pdf,document,10517.4,4.7,Study,visionias_history_notes,False,0.95
+3,ev_charging_invoice.png,image,202.2,5.0,Receipts,charging_invoice_poluppalli,False,0.95
+3,flight_invoice_delhi_bengaluru.png,image,273.3,6.4,Travel,flight_invoice_delhi_bengaluru,True,0.95
+3,green_revolution_india.pdf,document,102.1,5.6,Study,green_revolution_india,True,0.95
+3,health.txt,document,4.4,5.1,Study,healthy-lifestyle-guide,False,0.95
+3,image 2.jpg,image,5033.5,4.8,Photos,child-walking-road,False,0.95
+3,image 8.png,image,572.6,6.4,Receipts,siddhi_nuts_and_spices_bill,False,0.95
+3,image.jpg,image,5144.7,7.0,Photos,beach_day_scene,False,0.95
+3,image_01.png,image,182.6,4.9,Work,pay_slip_murhuda_sy,False,0.9
+3,image_11.png,image,380.4,4.8,Receipts,jeevan_hospital_bill,False,0.95
+3,ml ut2 ans.pages,no-text,521.0,5.2,Study,ml_ut2_ans,False,0.8
+3,nlp endsem.docx,document,352.1,6.9,Study,markov-model-nlp,False,0.9
+3,object_detection_research_paper.pdf,document,280.4,5.2,Study,object-detection-research-paper,True,0.95
+3,porsche_on_forest_road.jpg,image,6266.1,5.5,Photos,porsche-forest-road,True,0.95
+3,rent.png,image,417.4,5.0,Receipts,rent_receipt_vimlesh,False,0.95
+3,rent_receipt_may_2026.txt,document,0.1,5.8,Receipts,rent_receipt_may_2026,True,0.95
+3,research.pdf,document,632.4,8.9,Study,procedia-computer-science-2021,False,0.95
+3,speech.txt,document,3.6,4.4,Study,world_democracy_speech,False,0.9
+3,untitled 6.png,image,460.3,5.5,Receipts,airtel_bill_feb_2026,False,0.9
+3,untitled.docx,document,270.2,5.2,Study,alice-wonderland-notes,False,0.95

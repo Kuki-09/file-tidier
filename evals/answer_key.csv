@@ -1,0 +1,32 @@
+filename,expected_category,rename_expected
+object_detection_research_paper.pdf,Study,no
+flight_invoice_delhi_bengaluru.png,Receipts|Travel,no
+B4H-44aAzqc-unsplash.jpg,Photos,yes
+PpR6xgFMgZk-unsplash.jpg,Photos,yes
+RCH8OeyH604-unsplash.jpg,Photos,yes
+porsche_on_forest_road.jpg,Photos,no
+ai.pdf,Study,yes
+assignment_2.docx,Study,yes
+attention.pdf,Study,yes
+rent_receipt_may_2026.txt,Receipts,no
+air_water_pollution_questions.docx,Study,no
+courtyard.jpg,Photos,no
+dsa.pdf,Study,yes
+ede93-history.pdf,Study,yes
+health.txt,Study|Needs-Review,yes
+image 2.jpg,Photos,yes
+corgi_dog_in_grass.jpg,Photos,no
+image 8.png,Receipts,yes
+image.jpg,Photos,yes
+image_01.png,Work|Receipts,yes
+image_11.png,Receipts,yes
+ev_charging_invoice.png,Receipts,no
+ml ut2 ans.pages,Study,either
+nlp endsem.docx,Study,either
+rent.png,Receipts,yes
+research.pdf,Study,yes
+speech.txt,Study,yes
+green_revolution_india.pdf,Study,no
+untitled 6.png,Receipts,yes
+untitled.docx,Study|Needs-Review,yes
+.env,SKIPPED,n/a

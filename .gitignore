@@ -5,4 +5,6 @@ plan.json
 report.md
 undo_log.json
 .DS_Store
-.env
+.envoutputs/
+*.mov
+*.mp4
