@@ -1,41 +1,45 @@
 # File-Tidier
 
-A local file tidier. Point it at a messy folder: it reads each file, gives it a clear name, and sorts it into a folder. The reading is done by a small open model (Gemma 3 through Ollama) on your own laptop. Nothing is uploaded, and it works with Wi-Fi off.
+**A local file tidier. Gemma reads each file, names it from what is inside, and sorts it into a folder. Offline, with full undo.**
+
+Demo: [watch the video](ADD_VIDEO_LINK) · Evaluation: [eval/EVAL.md](eval/EVAL.md)
+
+Point it at a messy folder and it reads every PDF, Word doc, text file and image, gives each a clear name (`bill_final.txt` became `rent_receipt_may_2026.txt`) and moves it into `Study`, `Receipts`, `Travel`, `Photos`, `Work` or `Needs-Review`. It shows the plan first and asks before moving anything. A watcher mode tidies new files by itself a few seconds after they arrive. The model is Gemma 3 running through Ollama on your own laptop, so nothing is uploaded and it works with Wi-Fi off.
 
 Built for the Hacktoberfest Open-Source AI Challenge, Week 3 ("Slow and Steady").
 
 ![Folder before and after](docs/before_after_image.png)
 
-## What it does
+## Run it
 
-- Reads PDFs, Word docs, text files and images.
-- Renames messy names from what is inside the file (`bill_final.txt` became `rent_receipt_may_2026.txt`) and leaves good names alone.
-- Sorts files into `Study`, `Receipts`, `Travel`, `Photos`, `Work` or `Needs-Review`.
-- Shows a preview first and asks before moving anything.
-- Undoes the last run, exactly.
-- Lazy mode: a watcher tidies each new file a few seconds after it arrives.
-- Optional: files not modified for N months go into `Archive/`.
+```
+ollama pull gemma3:4b
+git clone https://github.com/Kuki-09/file-tidier.git && cd file-tidier
+python -m venv venv && source venv/bin/activate
+python -m pip install -r requirements.txt
 
-## Demo
+python cli.py run ~/Downloads/Messy              # preview, then confirm
+python cli.py run ~/Downloads/Messy --rename-only            # rename in place, no folders
+python cli.py run ~/Downloads/Messy --archive-months 6       # old files go to Archive/
+python cli.py undo ~/Downloads/Messy             # reverse the last run
+python watcher.py ~/Downloads/Messy              # lazy mode, Ctrl+C to stop
+```
 
-![Folder before and after](/Users/hiteshikukreja/Desktop/file-tidier/outputs/output_video.mov)
+Tested on a Mac with Python 3.10. The watcher handles only files that arrive after it starts. Tidy what is already there with one `cli.py run`.
 
-## Setup
+## How it works
 
-1. Install [Ollama](https://ollama.com) and pull the model:
-   ```
-   ollama pull gemma3:4b
-   ```
-2. Install the tool:
-   ```
-   git clone https://github.com/Kuki-09/file-tidier.git
-   cd file-tidier
-   python -m venv venv
-   source venv/bin/activate
-   python -m pip install -r requirements.txt
-   ```
-
-Tested on a Mac with Python 3.10.
+| Step           | What happens                                                                                                            | Code                            |
+| -------------- | ----------------------------------------------------------------------------------------------------------------------- | ------------------------------- |
+| Find files     | Top level only. Skips hidden files, partial downloads, symlinks and sensitive names (`.env`, keys, passwords, passport) | `scanner.py`                    |
+| Read           | First 1,500 characters of a PDF, docx or text file. Images are shrunk to 896 px                                         | `extractor.py`, `classifier.py` |
+| Name and sort  | Gemma 3 4B through Ollama, JSON checked with pydantic, one retry, then `Needs-Review`                                   | `classifier.py`                 |
+| Keep or rename | The old name stays only if the model and a word-overlap check both say it is fine                                       | `planner.py`                    |
+| Preview        | Numbered table filling in as each file finishes, then a confirm                                                         | `cli.py`                        |
+| Move           | Never overwrites (`_2`, `_3` on a clash). Every folder it creates is logged                                             | `executor.py`                   |
+| Undo           | Reverses the latest log and removes only the folders it created                                                         | `executor.py`                   |
+| Lazy mode      | Waits until a file stops growing, then tidies only the new files                                                        | `watcher.py`                    |
+| Archive        | Optional: files not modified for N months go to `Archive/<folder>`                                                      | `planner.py`                    |
 
 ## Use
 
@@ -89,6 +93,8 @@ Tested on a 30-file set I built (PDF, docx, txt, `.pages` and 15 images, includi
 - It cannot read `.pages` files or scanned PDFs with no text, so those are named from the file name alone.
 - A small vision model can misread fine details in images (the year on a rent receipt changed between runs once). That is why undo exists.
 
-## License
+## Data and licences
 
-MIT
+- Code: MIT (see `LICENSE`).
+- Model: Gemma 3 under the Gemma Terms of Use, run locally through Ollama.
+- Libraries: typer, rich, ollama, pypdf, python-docx, Pillow, pydantic and watchdog, each under its own licence.
