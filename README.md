@@ -100,6 +100,8 @@ These findings informed improvements to the handling of unreadable inputs and th
 
 See eval/EVAL.md for the test setup, results and case-by-case analysis, mistakes and remaining limitations.
 
+**Stress Test Output**
+
 ![Folder before and after](docs/Output_2.png)
 
 ### Time Comparison
