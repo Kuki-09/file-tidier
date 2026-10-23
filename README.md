@@ -1,10 +1,10 @@
 # File-Tidier
 
-**A local AI file organizer that understands file contents, gives files meaningful names, and sorts them without taking control away from you**
+**A local AI file organizer that understands file contents, gives files meaningful names and sorts them without taking control away from you**
 
-File-Tidier uses Gemma 3 4B through Ollama to organize messy folders on your own computer. Instead of relying only on filenames, it reads supported documents and images, proposes descriptive names, and sorts files into Study, Personal, Receipts, Travel, Photos, Work, or Needs-Review.
+File-Tidier uses Gemma 3 4B through Ollama to organize messy folders on your own computer. Instead of relying only on filenames, it reads supported documents and images, proposes descriptive names and sorts files into Study, Personal, Receipts, Travel, Photos, Work, or Needs-Review.
 
-It also supports automatic age-based archiving: choose an age threshold, such as six months, and older files can be moved into Archive/ while preserving their category folders.
+It also supports **automatic age-based archiving:** choose an age threshold, such as six months and older files can be moved into Archive/ while preserving their category folders.
 
 A generic image 8.png can become Receipts/rent_receipt_may_2026.png. A misleading filename does not have to dictate where a file goes. If a file cannot be read reliably, it can be routed to Needs-Review rather than treated as something the model understands.
 
@@ -14,7 +14,7 @@ A generic image 8.png can become Receipts/rent_receipt_may_2026.png. A misleadin
 
 Built around the idea of Slow and Steady: automate the small, annoying tasks and get your time back.
 
-Demo: [Watch the video](https://youtu.be/tXRiyng47rw) · Evaluation: eval/EVAL.md · Hand review: eval/REVIEW.md
+Demo: [Watch the video](https://youtu.be/tXRiyng47rw) · Evaluation:[Evaluation results (EVAL.md)](eval/EVAL.md)· Hand review: [Review and lessons learned (`REVIEW.md`)](eval/REVIEW.md)
 
 ![Folder before and after](docs/before_after_image.png)
 
@@ -70,15 +70,15 @@ File-Tidier uses an **open-weight model** locally instead of relying on a closed
 
 **No server to maintain:** Both the organizer and its optional watcher run on your own computer. The watcher does not require a separately hosted server.
 
-**More control:** You can inspect the workflow, experiment with prompts, and adapt or replace the model and supporting tools.
+**More control:** You can inspect the workflow, experiment with prompts and adapt or replace the model and supporting tools.
 
-**Local AI has trade-offs:** inference can be slower on modest hardware, and the model can still make mistakes. The benefit is greater control over your data, infrastructure, and usage costs—not a guarantee of perfect results.
+**Local AI has trade-offs:** inference can be slower on modest hardware and the model can still make mistakes. The benefit is greater control over your data, infrastructure and usage costs—not a guarantee of perfect results.
 
 ## Evaluation and Results
 
 File-Tidier has been tested on a 30-file baseline set and a separate 26-file stress-test set.
 
-**Baseline results**
+**1.Baseline results**
 
 **Correct destination category:** 30/30 files
 
@@ -90,15 +90,15 @@ File-Tidier has been tested on a 30-file baseline set and a separate 26-file str
 
 The baseline answer key was prepared after earlier runs, so these results are a useful sanity check, not an independent benchmark. **Repeatability also does not prove correctness.**
 
-**Stress testing**
+**2.Stress testing**
 
-The 26-file stress test included generic filenames, misleading extensions or names, already descriptive files, unreadable inputs, and files that should be handled cautiously.
+The 26-file stress test included generic filenames, misleading extensions or names, already descriptive files, unreadable inputs and files that should be handled cautiously.
 
-It exposed several useful failure patterns: some misleading filenames were correctly overridden using file content, while other cases showed that a plausible rename can still be wrong. It also highlighted the difficulty of distinguishing personal, study, and work documents, as well as the need to handle blank images, scanned documents, and unreadable files conservatively.
+It exposed several useful failure patterns: some misleading filenames were correctly overridden using file content, while other cases showed that a plausible rename can still be wrong. It also highlighted the difficulty of distinguishing personal, study and work documents, as well as the need to handle blank images, scanned documents and unreadable files conservatively.
 
 These findings informed improvements to the handling of unreadable inputs and the Needs-Review route. Results from runs before those changes should not be treated as measurements of the latest version. A fresh run of the same stress set is needed to measure the updated behavior fairly.
 
-See eval/EVAL.md for the test setup and results, and eval/REVIEW.md for the case-by-case analysis, mistakes, and remaining limitations.
+See eval/EVAL.md for the test setup and results and eval/REVIEW.md for the case-by-case analysis, mistakes and remaining limitations.
 
 ## Limits
 
