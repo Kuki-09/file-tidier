@@ -45,7 +45,7 @@ with open("bench_results.csv", "w", newline="") as out:
                    r.category, r.new_name, r.keep_name, round(r.confidence, 2)]
             rows.append(row)
             w.writerow(row)
-            out.flush()                       # keep partial results if you press Ctrl+C
+            out.flush()                      
             print(f"[run {run}/{runs}] [{i}/{len(files)}] {f['name']}  {sec:.1f}s")
 
 print("\n=== Seconds per file, by type (all runs) ===")
