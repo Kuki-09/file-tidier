@@ -82,8 +82,6 @@ File-Tidier has been tested on a 30-file baseline set and a separate 26-file str
 
 **Correct destination category:** 30/30 files
 
-**Correct rename-or-keep decisions:** 26/28 scored files
-
 **Same folder and filename across three runs:** 30/30 files
 
 **Undo:** all 30 files restored byte-for-byte
