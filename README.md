@@ -1,12 +1,20 @@
 # File-Tidier
 
-**A local file tidier. Gemma reads each file, names it from what is inside and sorts it into a folder. Offline, with full undo.**
+**A local AI file organizer that understands file contents, gives files meaningful names, and sorts them without taking control away from you **
 
-Demo: [watch the video](ADD_VIDEO_LINK) · Evaluation: [eval/EVAL.md](eval/EVAL.md)
+File-Tidier uses Gemma 3 4B through Ollama to organize messy folders on your own computer. Instead of relying only on filenames, it reads supported documents and images, proposes descriptive names, and sorts files into Study, Personal, Receipts, Travel, Photos, Work, or Needs-Review.
 
-Point it at a messy folder and it reads every PDF, Word doc, text file and image, gives each a clear name (`bill_final.txt` became `rent_receipt_may_2026.txt`) and moves it into `Study`, `Receipts`, `Travel`, `Photos`, `Work` or `Needs-Review`. It shows the plan first and asks before moving anything. A watcher mode tidies new files by itself a few seconds after they arrive. The model is Gemma 3 running through Ollama on your own laptop, so nothing is uploaded and it works with Wi-Fi off.
+It also supports automatic age-based archiving: choose an age threshold, such as six months, and older files can be moved into Archive/ while preserving their category folders.
 
-Built for the Hacktoberfest Open-Source AI Challenge, Week 3 ("Slow and Steady").
+A generic image 8.png can become Receipts/rent_receipt_may_2026.png. A misleading filename does not have to dictate where a file goes. If a file cannot be read reliably, it can be routed to Needs-Review rather than treated as something the model understands.
+
+**Preview the plan. Confirm the changes. Undo the run if needed.**
+
+**No cloud AI API. No per-file charges. No server to maintain. And, after setup, no internet connection required. **
+
+Built around the idea of Slow and Steady: automate the small, annoying tasks and get your time back.
+
+Demo: [Watch the video](https://youtu.be/tXRiyng47rw) · Evaluation: eval/EVAL.md · Hand review: eval/REVIEW.md
 
 ![Folder before and after](docs/before_after_image.png)
 
@@ -50,24 +58,53 @@ Tested on a Mac with Python 3.10. The watcher handles only files that arrive aft
 - Files with sensitive names (`.env`, keys, passwords, passport and similar) are never read or moved.
 - It stays in the folder you give it: top level only, no symlinks.
 
-## Results
+## Why open-source AI?
 
-Tested on a 30-file set I built (PDF, docx, txt, `.pages` and 15 images, including 8 files that already had good names). The answer key was written by hand, after I had seen earlier runs, so treat this as a sanity check and not a benchmark.
+File-Tidier uses an **open-weight model** locally instead of relying on a closed, hosted AI service for every file.
 
-|                                   | Result                                                    |
-| --------------------------------- | --------------------------------------------------------- |
-| Right folder                      | 30 / 30                                                   |
-| Right rename-or-keep decision     | 26 / 28                                                   |
-| Same folder and name in 3 runs    | 30 / 30                                                   |
-| Undo, checked with checksums      | all 30 files byte-identical                               |
-| First pass over 30 files          | about 5 min 44 s (about 13 s per image, 7 s per document) |
-| Moving the files                  | 0.02 s                                                    |
-| Sorting the same 30 files by hand | 10 min 49 s (one person, one try)                         |
+**Offline use:** After setup and model download, file organization can run without Wi-Fi, provided the local model and required dependencies are available.
+
+**Privacy:** File contents do not need to be uploaded to a third-party AI API.
+
+**No per-file AI costs:** There are no usage-based API charges for classification. Your computer still uses electricity and local processing resources.
+
+**No server to maintain:** Both the organizer and its optional watcher run on your own computer. The watcher does not require a separately hosted server.
+
+**More control:** You can inspect the workflow, experiment with prompts, and adapt or replace the model and supporting tools.
+
+**Local AI has trade-offs:** inference can be slower on modest hardware, and the model can still make mistakes. The benefit is greater control over your data, infrastructure, and usage costs—not a guarantee of perfect results.
+
+## Evaluation and Results
+
+File-Tidier has been tested on a 30-file baseline set and a separate 26-file stress-test set.
+
+**Baseline results**
+
+**Correct destination category:** 30/30 files
+
+**Correct rename-or-keep decisions:** 26/28 scored files
+
+**Same folder and filename across three runs:** 30/30 files
+
+**Undo:** all 30 files restored byte-for-byte
+
+The baseline answer key was prepared after earlier runs, so these results are a useful sanity check, not an independent benchmark. **Repeatability also does not prove correctness.**
+
+**Stress testing**
+
+The 26-file stress test included generic filenames, misleading extensions or names, already descriptive files, unreadable inputs, and files that should be handled cautiously.
+
+It exposed several useful failure patterns: some misleading filenames were correctly overridden using file content, while other cases showed that a plausible rename can still be wrong. It also highlighted the difficulty of distinguishing personal, study, and work documents, as well as the need to handle blank images, scanned documents, and unreadable files conservatively.
+
+These findings informed improvements to the handling of unreadable inputs and the Needs-Review route. Results from runs before those changes should not be treated as measurements of the latest version. A fresh run of the same stress set is needed to measure the updated behavior fairly.
+
+See eval/EVAL.md for the test setup and results, and eval/REVIEW.md for the case-by-case analysis, mistakes, and remaining limitations.
 
 ## Limits
 
-- It cannot read `.pages` files or scanned PDFs with no text, so those are named from the file name alone.
+- It cannot read `.pages`, `.mp3`, `.tar`, or scanned PDFs with no extractable text, so those are named from the file name alone.
 - A small vision model can misread fine details in images (the year on a rent receipt changed between runs once). That is why undo exists.
+- The watcher is a local convenience feature, not a cloud-hosted service. Your computer must remain running for it to monitor files.
 
 ## Data and licences
 
