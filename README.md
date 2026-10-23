@@ -1,6 +1,6 @@
 # File-Tidier
 
-**A local AI file organizer that understands file contents, gives files meaningful names, and sorts them without taking control away from you **
+**A local AI file organizer that understands file contents, gives files meaningful names, and sorts them without taking control away from you**
 
 File-Tidier uses Gemma 3 4B through Ollama to organize messy folders on your own computer. Instead of relying only on filenames, it reads supported documents and images, proposes descriptive names, and sorts files into Study, Personal, Receipts, Travel, Photos, Work, or Needs-Review.
 
