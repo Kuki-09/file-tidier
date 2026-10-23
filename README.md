@@ -14,7 +14,7 @@ A generic image 8.png can become Receipts/rent_receipt_may_2026.png. A misleadin
 
 Built around the idea of Slow and Steady: automate the small, annoying tasks and get your time back.
 
-Demo: [Watch the video](https://youtu.be/tXRiyng47rw) · Evaluation: [eval/EVAL.md](eval/EVAL.md)
+Demo: [Main Demo](https://youtu.be/tXRiyng47rw) · [Watcher Demo](https://youtu.be/ys9RGrQ7zRk) · Evaluation: [eval/EVAL.md](eval/EVAL.md)
 
 ![Folder before and after](docs/before_after_image.png)
 
