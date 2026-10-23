@@ -10,7 +10,7 @@ A generic image 8.png can become Receipts/rent_receipt_may_2026.png. A misleadin
 
 **Preview the plan. Confirm the changes. Undo the run if needed.**
 
-**No cloud AI API. No per-file charges. No server to maintain. And, after setup, no internet connection required. **
+**No cloud AI API. No per-file charges. No server to maintain. And, after setup, no internet connection required.**
 
 Built around the idea of Slow and Steady: automate the small, annoying tasks and get your time back.
 
