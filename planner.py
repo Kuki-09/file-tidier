@@ -26,13 +26,12 @@ def build_plan(folder: str, on_file=None, rename_only=False, only=None, archive_
     files = scan(folder)
     if only is not None:
         files = [f for f in files if f["name"] in only]
-    plan, used = [], set()   # used holds lowercase paths (macOS is case-insensitive)
+    plan, used = [], set()  
     for i, f in enumerate(files, 1):
         t0 = time.time()
         r = classify(f["path"])
         seconds = round(time.time() - t0, 1)
         stem = Path(f["name"]).stem
-        # a file we could not read (blank, broken, unsupported) goes to Needs-Review with its name untouched
         unread = bool(r.reason) or r.confidence == 0.0
         cat = "Needs-Review" if unread or r.confidence < 0.5 else r.category
         kept = unread or (r.keep_name and already_good(stem, r.new_name))

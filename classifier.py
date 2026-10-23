@@ -9,7 +9,7 @@ from PIL import Image, ImageOps
 from extractor import extract_text, IMAGE_EXTS
 
 MODEL = "gemma3:4b"
-BLANK_RANGE = 5   # an image whose lightest and darkest pixels differ by this little or less is blank
+BLANK_RANGE = 5 
 
 class Answer(BaseModel):
     """The fields Gemma fills in."""
@@ -59,10 +59,10 @@ class BlankImage(Exception):
 def shrink(path: Path) -> bytes:
     """Resize an image to at most 896x896 JPEG, in memory. Raises BlankImage if it is one flat colour."""
     with Image.open(path) as im:
-        im = ImageOps.exif_transpose(im)          # fix phone-photo rotation
+        im = ImageOps.exif_transpose(im)         
         im.thumbnail((896, 896))
         rgba = im.convert("RGBA")
-        bg = Image.new("RGBA", rgba.size, "white")  # transparent -> white, not black
+        bg = Image.new("RGBA", rgba.size, "white")  
         bg.alpha_composite(rgba)
         rgb = bg.convert("RGB")
         lo, hi = rgb.convert("L").getextrema()
@@ -84,12 +84,12 @@ def classify(path: Path) -> Result:
             msg["images"] = [shrink(path)]
         except BlankImage:
             return _fallback(path, "blank image")
-        except Exception:                           # corrupt or unsupported image
+        except Exception:                         
             return _fallback(path, "could not open image")
         msg["content"] += "\nThis is an image. Judge it by what it shows, and read any visible text."
     else:
         text = extract_text(path)
-        if not text.strip():                        # empty, broken, or a format we cannot read
+        if not text.strip():                      
             return _fallback(path, "no readable text")
         msg["content"] += "\nText snippet: " + text
 
@@ -99,17 +99,16 @@ def classify(path: Path) -> Result:
                 model=MODEL,
                 messages=[msg],
                 format=Answer.model_json_schema(),
-                # a retry at the same temperature would repeat the same answer
                 options={"temperature": 0 if attempt == 0 else 0.3},
             )
             answer = Answer.model_validate_json(r["message"]["content"])
             return Result(**answer.model_dump())
         except (ValidationError, json.JSONDecodeError):
-            continue                                # malformed reply: try once more
+            continue                               
         except ollama.ResponseError as e:
             if e.status_code == 404:
                 raise RuntimeError(f"Model '{MODEL}' not found. Run: ollama pull {MODEL}") from e
-            time.sleep(2)                           # runner may be restarting; retry once
+            time.sleep(2)                    
             continue
         except ConnectionError as e:
             raise RuntimeError("Can't reach Ollama. Start it with: ollama serve") from e

@@ -14,7 +14,7 @@ A generic image 8.png can become Receipts/rent_receipt_may_2026.png. A misleadin
 
 Built around the idea of Slow and Steady: automate the small, annoying tasks and get your time back.
 
-Demo: [Watch the video](https://youtu.be/tXRiyng47rw) · Evaluation:[eval/EVAL.md](eval/EVAL.md)· Hand review: [eval/REVIEW.md](eval/REVIEW.md)
+Demo: [Watch the video](https://youtu.be/tXRiyng47rw) · Evaluation: [eval/EVAL.md](eval/EVAL.md)·
 
 ![Folder before and after](docs/before_after_image.png)
 
@@ -98,7 +98,18 @@ It exposed several useful failure patterns: some misleading filenames were corre
 
 These findings informed improvements to the handling of unreadable inputs and the Needs-Review route. Results from runs before those changes should not be treated as measurements of the latest version. A fresh run of the same stress set is needed to measure the updated behavior fairly.
 
-See eval/EVAL.md for the test setup and results and eval/REVIEW.md for the case-by-case analysis, mistakes and remaining limitations.
+See eval/EVAL.md for the test setup, results and case-by-case analysis, mistakes and remaining limitations.
+
+![Folder before and after](docs/Output 2.png)
+
+### Time Comparison
+
+| Task                                    |    Time taken |
+| --------------------------------------- | ------------: |
+| File-Tidier: first pass over 30 files   | ~5 min 44 sec |
+| Manual sorting: one person, one attempt | 10 min 49 sec |
+
+In this trial, File-Tidier completed the first pass faster than sorting the same files manually. Results may vary depending on the files, system and manual sorting approach.
 
 ## Limits
 
