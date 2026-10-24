@@ -4,9 +4,9 @@
 
 File-Tidier uses Gemma 3 4B through Ollama to organize messy folders on your own computer. Instead of relying only on filenames, it reads supported documents and images, proposes descriptive names and sorts files into Study, Personal, Receipts, Travel, Photos, Work, or Needs-Review.
 
-It also supports **automatic age-based archiving:** choose an age threshold, such as six months and older files can be moved into Archive/ while preserving their category folders.
+It also supports **optional age-based archiving:** choose an age threshold, such as six months and older files can be moved into Archive/ while preserving their category folders.
 
-A generic image 8.png can become Receipts/rent_receipt_may_2026.png. A misleading filename does not have to dictate where a file goes. If a file cannot be read reliably, it can be routed to Needs-Review rather than treated as something the model understands.
+A generic bill_final.txt can become Receipts/rent_receipt_may_2026.png and flight_ticket.pdf, which was really a restaurant bill, became Receipts/restaurant_bill_example.pdf. A misleading filename does not have to dictate where a file goes. If a file cannot be read reliably, it can be routed to Needs-Review rather than treated as something the model understands.
 
 **Preview the plan. Confirm the changes. Undo the run if needed.**
 
@@ -52,10 +52,10 @@ Tested on a Mac with Python 3.10. The watcher handles only files that arrive aft
 ## Safety
 
 - Nothing leaves your machine. Everything runs through local Ollama.
-- Preview first. Nothing moves until you confirm (the watcher has no confirm step, so it never creates folders or touches old files).
+- Preview first. Nothing moves until you confirm. The watcher has no confirm step, so it only touches files that arrive after it starts, and every batch it handles can be undone.
 - Files are never overwritten. Name clashes get `_2`, `_3`.
 - Full undo. Every run writes a log in `.tidy_logs/` inside the folder, with only paths in it.
-- Files with sensitive names (`.env`, keys, passwords, passport and similar) are never read or moved.
+- Files with sensitive names (`.env`, keys, passwords, passport and similar) are never read or moved. This checks names only, not what is inside a file.
 - It stays in the folder you give it: top level only, no symlinks.
 
 ## Why open-source AI?
@@ -76,7 +76,7 @@ File-Tidier uses an **open-weight model** locally instead of relying on a closed
 
 ## Evaluation and Results
 
-File-Tidier has been tested on a 30-file baseline set and a separate 26-file stress-test set.
+File-Tidier was tested on a 30-file baseline set and on a stress-test set built to break it.
 
 **1.Baseline results**
 
@@ -86,15 +86,15 @@ File-Tidier has been tested on a 30-file baseline set and a separate 26-file str
 
 **Undo:** all 30 files restored byte-for-byte
 
-The baseline answer key was prepared after earlier runs, so these results are a useful sanity check, not an independent benchmark. **Repeatability also does not prove correctness.**
+These were measured before the Personal folder and the Needs-Review changes, and I have not repeated them on the final version. The answer key was written after earlier runs, so this is a sanity check, not an independent benchmark. **Repeatability also does not prove correctness.**
 
 **2.Stress testing**
 
-The 26-file stress test included generic filenames, misleading extensions or names, already descriptive files, unreadable inputs and files that should be handled cautiously.
+The stress set has generic and misleading filenames, a misleading double extension, empty and broken files, blank images, a scanned PDF, unsupported formats, sensitive filenames and a file in a subfolder. All contents are made up.
 
-It exposed several useful failure patterns: some misleading filenames were correctly overridden using file content, while other cases showed that a plausible rename can still be wrong. It also highlighted the difficulty of distinguishing personal, study and work documents, as well as the need to handle blank images, scanned documents and unreadable files conservatively.
+Run 1 (26 files): 15 as expected, 4 judgment calls and 7 wrong. The 7 wrong: two blank images sorted as photos; three files with nothing readable (an empty .txt, an .xlsx, an .mp3) named and sorted from their file names alone; and two rental agreements sent to Receipts. Misleading names were often fixed from the content: flight_ticket.pdf was a restaurant bill and meeting_minutes.docx was a recipe.
 
-These findings informed improvements to the handling of unreadable inputs and the Needs-Review route. Results from runs before those changes should not be treated as measurements of the latest version. A fresh run of the same stress set is needed to measure the updated behavior fairly.
+Run 2 (27 files, with a .tar.gz added): after the fix, blank images and files with nothing readable go to Needs-Review with their names unchanged, and the empty notes.txt no longer gets an invented name. Still wrong: receipt.pdf, a rental agreement that says "Not an actual receipt", still goes to Receipts. The Study, Personal and Work boundary is also unreliable, and a reworded category description once moved three ordinary files from Personal to Study.
 
 See [eval/EVAL.md](eval/EVAL.md) for the test setup, results and case-by-case analysis, mistakes and remaining limitations.
 
@@ -113,8 +113,11 @@ In this trial, File-Tidier completed the first pass faster than sorting the same
 
 ## Limits
 
-- It cannot read `.pages`, `.mp3`, `.tar`, or scanned PDFs with no extractable text, so those are named from the file name alone.
+- The seven folders are fixed. A file that fits none of them goes to the closest one or to Needs-Review.
+- It cannot read `.pages`, `.tar`, or scanned PDFs with no extractable text, so those are named from the file name alone.
+- Any blank images or document goes to Needs-Review.
 - A small vision model can misread fine details in images (the year on a rent receipt changed between runs once). That is why undo exists.
+- Only the top level of a folder is scanned. Files inside subfolders are left alone.
 - The watcher is a local convenience feature, not a cloud-hosted service. Your computer must remain running for it to monitor files.
 
 ## Data and licences

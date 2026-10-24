@@ -59,19 +59,15 @@ I then added an instruction asking the model to check whether the original filen
 
 This exposed a weakness in the model's judgment: generating a meaningful filename was not the same as correctly deciding whether the original filename should be replaced.
 
-### Stage 3: Compare the original filename with the file contents
+### Stage 3: Let the code have the last word
 
-I refined the prompt further to make the decision process explicit:
+Gemma was good at writing a name from a file's content and unreliable at judging the old name: for `some.pdf` it wrote `relu_activation_script` and still said to keep `some.pdf`. I tightened the keep rule in the prompt (keep only if the old name clearly says the same thing as the new one, treat generic names such as `untitled`, `scan` and `final` as not good enough, and rename when unsure). I also added a check in code: the old name is kept only if the model says keep and at least 60% of the old name's words appear in the new name.
 
-1. Inspect the file's contents and generate a meaningful filename.
-2. Check whether the original filename is meaningful and aligned with the actual contents.
-3. If the original filename is uninformative or inconsistent with the contents, use the newly generated filename. Otherwise, preserve the original meaningful filename.
+An earlier attempt to make the model write out a comparison did nothing, because that field was not in its output schema, so I removed it.
 
-After this refinement, the output on the separate test dataset containing filenames such as `some.pdf`, `ticket_scan_7` and `ticket_scan_77` became clean. The original 30-file dataset was also tested later and its output was clean.
+After this change, the output on the separate test dataset with filenames such as `some.pdf`, `ticket_scan_7` and `ticket_scan_77` became clean.
 
-These observations are qualitative; no separate numerical score was recorded to measure the improvement from each prompt stage.
-
-**Key lesson:** The challenge was not only generating meaningful filenames, but also making the correct keep-or-rename decision. Explicitly comparing the original filename with the file's contents helped address this issue.
+**Key lesson:** The challenge was not only generating meaningful filenames, but also making the correct keep-or-rename decision and that decision is better not left to a small model alone.
 
 ## 4. Stress-test results
 
@@ -83,20 +79,23 @@ The test folder contained 28 items. The organizer processed 26 files, leaving `.
 
 Notable proposed results:
 
-| Input                                        | Planned destination                     | Observation                                                                                                                           |
-| -------------------------------------------- | --------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------- |
-| `IMG_001.jpg`                                | `Photos/image_data_001.jpg`             | The image was blank, but it was categorized as a photo and given a descriptive filename instead of being sent to review.              |
-| `broken_document.pdf`                        | `Needs-Review/broken_document.pdf`      | The document could not be opened, so routing it to review was appropriate.                                                            |
-| `document.pdf`                               | `Needs-Review/empty_pdf_document.pdf`   | The PDF was empty, so routing it to review was appropriate; changing its filename was unnecessary.                                    |
-| `ev_charging_invoice.png.pdf`                | `Receipts/ev_charging_invoice.pdf`      | Removed a redundant extension while preserving useful identifying words.                                                              |
-| `flight_ticket.pdf`                          | `Receipts/restaurant_bill_example.pdf`  | The file contained a restaurant bill and the generated filename reflected its contents despite the misleading original filename.      |
-| `meeting_minutes.docx`                       | `Personal/cooking_recipe.docx`          | The file contained a cooking recipe and the generated filename reflected its contents despite the misleading original filename.       |
-| `receipt.pdf`                                | `Receipts/rental_agreement_summary.pdf` | The file contained a rental agreement, so the content-based rename correctly reflected its contents.                                  |
-| `recipe.txt`                                 | `Personal/employment_checklist.txt`     | The file contained an employment checklist and the filename reflected its contents, but the category should have been `Work`.         |
-| Scanned PDF (original filename not recorded) | Destination not recorded                | Scanned-PDF content was not supported by the extraction pipeline, so the model could not reliably read its contents.                  |
-| `untitled.docx`                              | `Needs-Review/untitled_document.docx`   | The document was blank, so routing it to review was appropriate; the descriptive rename was unnecessary.                              |
-| `untitled_image.png`                         | `Photos/untitled_image.png`             | The image was blank, but it was categorized as a photo instead of being sent to review.                                               |
-| `podcast_recording.mp3`                      | `Study/podcast_recording.mp3`           | MP3 content extraction was unsupported at this stage, but the file was assigned a category instead of being routed to `Needs-Review`. |
+| Input                         | Planned destination                     | Observation                                                                                                                                    |
+| ----------------------------- | --------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------- |
+| `IMG_001.jpg`                 | `Photos/image_data_001.jpg`             | The image was blank, but it was categorized as a photo and given a descriptive filename instead of being sent to review.                       |
+| `broken_document.pdf`         | `Needs-Review/broken_document.pdf`      | The document could not be opened, so routing it to review was appropriate.                                                                     |
+| `document.pdf`                | `Needs-Review/empty_pdf_document.pdf`   | The PDF was empty, so routing it to review was appropriate; changing its filename was unnecessary.                                             |
+| `ev_charging_invoice.png.pdf` | `Receipts/ev_charging_invoice.pdf`      | Removed a redundant extension while preserving useful identifying words.                                                                       |
+| `flight_ticket.pdf`           | `Receipts/restaurant_bill_example.pdf`  | The file contained a restaurant bill and the generated filename reflected its contents despite the misleading original filename.               |
+| `meeting_minutes.docx`        | `Personal/cooking_recipe.docx`          | The file contained a cooking recipe and the generated filename reflected its contents despite the misleading original filename.                |
+| `monthly_budget.xlsx`         | `Personal/monthly_budget.xlsx`          | The tool cannot read `.xlsx`, so the file was never read. The folder was a guess from the file name that happened to be sensible.              |
+| `notes.txt`                   | `Study/study_notes.txt`                 | The file was empty. The model invented a name and a folder from the file name, while the other empty file, `final_v2.txt`, went to review.     |
+| `receipt.pdf`                 | `Receipts/rental_agreement_summary.pdf` | The new name fits the content, but the folder is wrong: the file is a rental agreement summary and says "Not an actual receipt".               |
+| `recipe.txt`                  | `Personal/employment_checklist.txt`     | The file contained an employment checklist and the name reflects it. I expected `Work`; `Personal` is defensible, so this is a judgment call.  |
+| `rental_agreement.pdf`        | `Receipts/rental_agreement.pdf`         | A rental agreement is not proof of a payment, so the folder is wrong. The prompt listed "rent" under Receipts, which probably pulled it there. |
+| `scanned_document.pdf`        | `Needs-Review/scanned_document.pdf`     | The PDF is a picture of a page with no text layer. The tool cannot read it, so review with the name unchanged is appropriate.                  |
+| `untitled.docx`               | `Needs-Review/untitled_document.docx`   | The document was blank, so routing it to review was appropriate; the descriptive rename was unnecessary.                                       |
+| `untitled_image.png`          | `Photos/untitled_image.png`             | The image was blank, but it was categorized as a photo instead of being sent to review.                                                        |
+| `podcast_recording.mp3`       | `Study/podcast_recording.mp3`           | Audio cannot be read, but the file was assigned a category from its name instead of being routed to review.                                    |
 
 The test also showed that some files with misleading filenames could be classified using their contents rather than their original names. This is an important capability, but the incorrect or questionable names demonstrate that content-based naming still needs safeguards.
 
@@ -127,13 +126,13 @@ The second run took 94 seconds, approximately 3.5 seconds per processed file acc
 
 ### What changed?
 
-The clearest observed changes included:
+Between Run 1 and Run 2:
 
-- `document.pdf` and `untitled.docx` retained its original filename and moved to `Needs-Review`.
+- `IMG_001.jpg` and `untitled_image.png` (both blank) moved from `Photos` to `Needs-Review`.
+- `notes.txt` (empty) moved from `Study`, with an invented name, to `Needs-Review` with its name kept.
 - `podcast_recording.mp3` moved from `Study` to `Needs-Review`.
-- `untitled_image.png` moved from `Photos` to `Needs-Review`.
-- `IMG_001.jpg` moved from `Photos` to `Needs-Review`.
-- `monthly_budget.xlsx` moved from `Personal` to `Needs-Review`.
+- `monthly_budget.xlsx` moved from `Personal` to `Needs-Review`. It was a guess in Run 1, and the tool still cannot read it.
+- `document.pdf` and `untitled.docx` kept their original filenames.
 
 These changes indicate more conservative handling of several problematic inputs. However, `monthly_budget.xlsx` also being sent to review raises a separate concern: the system may be rejecting some usable files unnecessarily.
 
@@ -143,7 +142,7 @@ The goal is not to maximize the number of files in `Needs-Review`. It is to reco
 
 ### Sensitive files
 
-The `.env` and `password.txt` files were intentionally excluded from processing. This matches the project's intended protection for files with sensitive names.
+The `.env` and `password.txt` files were intentionally excluded from processing. This matches the project's intended protection for files with sensitive names.and that decision is better not left to a small model alone.
 
 ### Nested folders
 
@@ -169,7 +168,6 @@ Further tests should verify:
 - Recent files are not archived.
 - Review-required files remain identifiable.
 - Archive operations can be undone.
-- Unsupported formats are handled consistently by the archive logic.
 
 ## 7. Limitations
 
