@@ -134,15 +134,15 @@ Between Run 1 and Run 2:
 - `monthly_budget.xlsx` moved from `Personal` to `Needs-Review`. It was a guess in Run 1, and the tool still cannot read it.
 - `document.pdf` and `untitled.docx` kept their original filenames.
 
-These changes indicate more conservative handling of several problematic inputs. However, `monthly_budget.xlsx` also being sent to review raises a separate concern: the system may be rejecting some usable files unnecessarily.
+These changes mean more conservative handling of inputs the tool cannot read. The goal is not to maximize the number of files in `Needs-Review`, only to recognize genuine uncertainty, while still organizing files that can be read reliably.
 
-The goal is not to maximize the number of files in `Needs-Review`. It is to recognize genuine uncertainty while still organizing files that can be handled reliably.
+One more finding: in an intermediate run, a reworded category description moved three ordinary files (`plant_care.txt`, `short_story.docx` and `healthy_lifestyle_guide.pdf`) from Personal to Study. The Study, Personal and Work boundary is sensitive to small wording changes, which is a limit of a 4B model and not something more prompt text reliably fixes.
 
 ## 5. Safety and scope observations
 
 ### Sensitive files
 
-The `.env` and `password.txt` files were intentionally excluded from processing. This matches the project's intended protection for files with sensitive names.and that decision is better not left to a small model alone.
+The `.env` and `password.txt` files were intentionally excluded from processing. This matches the project's intended protection for files with sensitive names and that decision is better not left to a small model alone.
 
 ### Nested folders
 
