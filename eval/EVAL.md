@@ -75,7 +75,7 @@ The stress tests included misleading filenames, generic names, readable document
 
 ### Run 1: before refining review handling
 
-The test folder contained 28 items. The organizer processed 26 files, leaving `.env` and `password.txt` untouched.
+The test folder contained 28 items. The organizer processed 26 files, leaving `.env` and `password.txt` untouched. The test folder also contained a nested folder with one file, which was intentionally skipped because File-Tidier only processes top-level files.
 
 Notable proposed results:
 
@@ -101,7 +101,7 @@ The test also showed that some files with misleading filenames could be classifi
 
 ### Run 2: after refining review handling
 
-The test folder contained 29 items, including the additional `apache-tomcat-10.1.28.tar.gz` file. The organizer processed 27 files.
+The test folder contained 29 items, including the additional `apache-tomcat-10.1.28.tar.gz` file. The organizer processed 27 files. The remaining two, .env and passwords.txt, were intentionally skipped by the security rules implemented in the code. The test folder also contained a nested folder with one file, which was intentionally skipped because File-Tidier only processes top-level files.
 
 The second run took 94 seconds, approximately 3.5 seconds per processed file according to the CLI output.
 
