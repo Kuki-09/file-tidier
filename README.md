@@ -2,19 +2,19 @@
 
 **A local AI file organizer that understands file contents, gives files meaningful names and sorts them without taking control away from you**
 
+Demo: [Main Demo](https://youtu.be/tXRiyng47rw) · [Watcher Demo](https://youtu.be/ys9RGrQ7zRk) · Evaluation: [eval/EVAL.md](eval/EVAL.md)
+
 File-Tidier uses Gemma 3 4B through Ollama to organize messy folders on your own computer. Instead of relying only on filenames, it reads supported documents and images, proposes descriptive names and sorts files into Study, Personal, Receipts, Travel, Photos, Work, or Needs-Review.
 
 It also supports **optional age-based archiving:** choose an age threshold, such as six months and older files can be moved into Archive/ while preserving their category folders.
 
-A generic bill_final.txt can become Receipts/rent_receipt_may_2026.png and flight_ticket.pdf, which was really a restaurant bill, became Receipts/restaurant_bill_example.pdf. A misleading filename does not have to dictate where a file goes. If a file cannot be read reliably, it can be routed to Needs-Review rather than treated as something the model understands.
+A generic bill_final.txt can become Receipts/rent_receipt_may_2026.txt and flight_ticket.pdf, which was really a restaurant bill, became Receipts/restaurant_bill_example.pdf. A misleading filename does not have to dictate where a file goes. If a file cannot be read reliably, it can be routed to Needs-Review rather than treated as something the model understands.
 
 **Preview the plan. Confirm the changes. Undo the run if needed.**
 
 **No cloud AI API. No per-file charges. No server to maintain. And, after setup, no internet connection required.**
 
 Built around the idea of Slow and Steady: automate the small, annoying tasks and get your time back.
-
-Demo: [Main Demo](https://youtu.be/tXRiyng47rw) · [Watcher Demo](https://youtu.be/ys9RGrQ7zRk) · Evaluation: [eval/EVAL.md](eval/EVAL.md)
 
 ![Folder before and after](docs/before_after_image.png)
 
